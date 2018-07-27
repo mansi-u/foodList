@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<body>
+
+    <div ng-app="myApp" ng-controller="mainCtrl">
+        <table style="width:100%">
+            <tr>
+                <td> Name </td>
+                <td> Quantity</td>
+                <td> Created-till-now</td>
+                <td> Predicted</td>
+                <td> Status</td>
+            </tr>
+
+            <tr ng-repeat="fl in foodList">
+
+                <td> {{fl.name}} </td>
+                <td> {{fl.quantity}}</td>
+                <td> {{fl["created-till-now"]}}</td>
+                <td> {{fl.predicted}}</td>
+                <td>
+                    <button ng-click="updateStatus(fl._id)">Status</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <script>
+        var app = angular.module('myApp', []);
+        var backendServerUrl = "http://localhost:80";
+
+        //  var socket = io.connect(backendServerUrl);
+
+        app.controller('mainCtrl', function ($scope, $http) {
+            var socket = io.connect('http://127.0.0.1:80');
+            // socket.on('connect', function (data) {
+            //     socket.emit('join', 'Hello World from client');
+            // });
+            socket.on('foodList', function (data) {
+                console.log("socket", data);
+                $scope.foodList = data;
+                $scope.$apply();
+            });
+            // ws.onmessage = function (evt) {
+            //     //   var received_msg = evt.data;
+            //     console.log("data", evt.data)
+            //     //alert("Message is received...", );
+            // };
+
+            $http.get(backendServerUrl + "/api/getFoodList")
+                .then(function (response) {
+                    $scope.foodList = response.data.data;
+                });
+
+            $scope.updateStatus = function (_id) {
+                console.log(_id);
+                $http.post(backendServerUrl + "/api/updateStatus", {
+                        _id: _id
+                    })
+                    .then(function (response) {});
+            }
+        });
+    </script>
+</body>
+
+</html>
