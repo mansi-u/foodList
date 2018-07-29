@@ -24,6 +24,7 @@ app.use(express.static(__dirname + '/node_modules'));
 app.get('/', function (req, res) {
     res.sendFile(__dirname + "/" + "index.html");
 });
+console.log("process.env.PORT", process.env.PORT);
 server.listen(process.env.PORT || 5000);
 
 
