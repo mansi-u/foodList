@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 var dbName = 'foodlist';
-var URL = `mongodb://mansi:db1234@ds259351.mlab.com:59351`
+var URL = `mongodb://mansi:db1234@ds259351.mlab.com:59351/foodlist`
 
 function insertFoodItem(data, callback) {
     //console.log(data);
