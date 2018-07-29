@@ -7,10 +7,10 @@ function insertFoodItem(data, callback) {
     //console.log(data);
     MongoClient.connect(URL, {
         useNewUrlParser: true
-    }, function (err, db) {
+    }, function (err, client) {
         if (err) return console.log(err);
         //  console.log(URL);
-       // var db = client.db(dbName);
+       /var db = client.db(dbName);
         db.collection('food').insert(data, function (err, insertedData) {
             callback({
                 err: err,
@@ -24,10 +24,10 @@ function insertFoodItem(data, callback) {
 function getFoodList(callback) {
     MongoClient.connect(URL, {
         useNewUrlParser: true
-    }, function (err, db) {
+    }, function (err, client) {
         if (err) return console.log(err);
         //  console.log(URL);
-       // var db = client.db(dbName);
+       var db = client.db(dbName);
         db.collection("food").find({}).toArray(function (err, result) {
             if (err) throw err;
             console.log(result);
@@ -43,10 +43,10 @@ function getFoodList(callback) {
 function updateStatus(data, callback) {
     MongoClient.connect(URL, {
         useNewUrlParser: true
-    }, function (err, db) {
+    }, function (err, client) {
         if (err) return console.log(err);
         //  console.log(URL);
-      //  var db = client.db(dbName);
+       var db = client.db(dbName);
         db.collection("food").findOneAndUpdate({
             _id: ObjectID(data._id)
         }, {
