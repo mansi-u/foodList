@@ -31,12 +31,12 @@
 
     <script>
         var app = angular.module('myApp', []);
-        var backendServerUrl = "http://localhost:80";
+        var backendServerUrl = "https://sheltered-tundra-25793.herokuapp.com";
 
         //  var socket = io.connect(backendServerUrl);
 
         app.controller('mainCtrl', function ($scope, $http) {
-            var socket = io.connect('http://127.0.0.1:80');
+            var socket = io.connect(backendServerUrl);
             // socket.on('connect', function (data) {
             //     socket.emit('join', 'Hello World from client');
             // });
